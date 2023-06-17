@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+:host .datetime-header {
+    padding-inline: 10px; /* Cambia el valor según tus necesidades */
+    padding-top: 10px; /* Cambia el valor según tus necesidades */
+    padding-bottom: 10px; /* Cambia el valor según tus necesidades */
+    background: blue; /* Cambia el color según tus necesidades */
+    color: white; /* Cambia el color según tus necesidades */
+}

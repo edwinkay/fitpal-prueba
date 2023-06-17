@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de Clases</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let clase of clases">
+      <ion-label>{{ clase.nombre }}</ion-label>
+      <ion-label>{{ clase.horario }}</ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="editarClase(clase)">Editar</ion-button>
+        <ion-button (click)="eliminarClase(clase)">Eliminar</ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>
