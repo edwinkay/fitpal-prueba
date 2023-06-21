@@ -11,11 +11,10 @@ import { HorarioService } from 'src/app/services/horario.service';
 export class FormularioClaseComponent implements OnInit {
   //creando el formGroup
   crearHorario: FormGroup;
+  titleChange: string = 'Agregar Horario';
+  camposVacios: boolean = false;
 
-  //creando las variables para almacenar los datos
-  clase: any;
-  horario: any;
-  date: any;
+  date: Date = new Date();
 
   id: string | null;
 
@@ -27,78 +26,60 @@ export class FormularioClaseComponent implements OnInit {
   ) {
     this.crearHorario = this.fb.group({
       clase: ['', Validators.required],
-      horario: ['', Validators.required],
+      date: [new Date().toISOString(), Validators.required],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    this.EXeditar()
+    this.EXeditar();
   }
 
   agregarHorario() {
-    const format = new Date(this.date);
-    const fd = format
-      .toLocaleDateString('es-ES', {
-        weekday: 'long',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-        hourCycle: 'h12',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-      })
-      .replace('.', '')
-      .replace(/(a|p)\.\u00a0m\./i, (match) => match.toLowerCase());
-
-    const horario = {
-      materia: this.clase,
-      fecha: fd,
-    };
-    this._horarioService.agregarHorario(horario).then(() => {
-      this.router.navigate(['/pagina-principal']);
-    });
+    if (this.crearHorario.valid) {
+      const horario = {
+        clase: this.crearHorario.value.clase,
+        date: new Date(this.crearHorario.value.date).toISOString(),
+      };
+      this._horarioService.agregarHorario(horario).then(() => {
+        this.router.navigate(['/pagina-principal']);
+      });
+    }else{
+      this.camposVacios = true;
+      setTimeout(() => {
+        this.camposVacios = false;
+      }, 2000);
+    }
   }
-  agregarEditar(){
+  agregarEditar() {
+    if (this.crearHorario.invalid) {
+      return;
+    }
     if (this.id === null) {
-      this.agregarHorario()
-    }else {
-      this.editarHorario(this.id)
+      this.agregarHorario();
+    } else {
+      this.editarHorario(this.id);
     }
   }
   editarHorario(id: string) {
-    const format = new Date(this.date);
-    const fd = format
-      .toLocaleDateString('es-ES', {
-        weekday: 'long',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-        hourCycle: 'h12',
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-      })
-      .replace('.', '')
-      .replace(/(a|p)\.\u00a0m\./i, (match) => match.toLowerCase());
     const horario = {
-      materia: this.clase,
-      fecha: fd,
+      clase: this.crearHorario.value.clase,
+      date: new Date(this.crearHorario.value.date).toISOString(),
     };
     this._horarioService.update(id, horario).then(() => {
       this.router.navigate(['/pagina-principal']);
-    })
+      console.log('actualizo');
+    });
   }
-  EXeditar(){
+  EXeditar() {
     if (this.id !== null) {
-      this._horarioService.obtHorario(this.id).subscribe(data => {
-        console.log(data, 'mi data es esta')
+      this.titleChange = 'Editar horario';
+      this._horarioService.obtHorario(this.id).subscribe((data) => {
         this.crearHorario.setValue({
-          clase: data.payload.data()['materia'],
-          horario: data.payload.data()['fecha'],
-        })
-      })
+          clase: data.payload.data()['clase'],
+          date: data.payload.data()['date'],
+        });
+      });
     }
   }
 }

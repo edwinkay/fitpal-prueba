@@ -11,7 +11,7 @@ export class HorarioService {
 
   getHorario(): Observable<any> {
     return this.firestore
-      .collection('horario', (ref) => ref.orderBy('fecha', 'asc'))
+      .collection('horario', (ref) => ref.orderBy('date', 'asc'))
       .snapshotChanges();
   }
 

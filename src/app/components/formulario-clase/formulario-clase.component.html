@@ -9,31 +9,33 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Clase</ion-label>
-      <ion-input [(ngModel)]="clase" required></ion-input>
-    </ion-item>
+  <ion-list [formGroup]="crearHorario">
+  <ion-item>
+    <ion-label position="floating">Clase</ion-label>
+    <ion-input formControlName="clase" required></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <!-- <ion-label position="floating">Horario</ion-label> -->
-      <ion-datetime
-        required
-        class="dt"
-        display-format="YYYY-MM-DD"
-        hourCycle="h12"
-        [(ngModel)]="date"
-      >
-        <span slot="title">Selecciona un horario</span>
-        <span slot="time-label">Tiempo</span></ion-datetime
-      >
-    </ion-item>
+  <ion-item>
+    <ion-datetime
+      formControlName="date"
+      required
+      class="dt"
+      display-format="YYYY-MM-DD"
+      hourCycle="h12"
+    >
+      <span slot="title">Selecciona un horario</span>
+      <span slot="time-label">Tiempo</span>
+    </ion-datetime>
+  </ion-item>
 
-    <ion-button expand="full" (click)="agregarHorario()"
-      >Agregar Horario</ion-button
-    >
-    <ion-button color="danger" expand="full" [routerLink]="'/pagina-principal'"
-      >Volver</ion-button
-    >
-  </ion-list>
+  <ion-item expand="full" *ngIf="camposVacios" color="danger">
+    Los campos no pueden estar vacíos.
+  </ion-item>
+
+  <ion-button expand="full" (click)="agregarEditar()">{{ titleChange }}</ion-button>
+  <ion-button color="danger" expand="full" [routerLink]="'/pagina-principal'">
+    Volver
+  </ion-button>
+</ion-list>
+
 </ion-content>

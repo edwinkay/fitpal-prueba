@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HorarioService } from 'src/app/services/horario.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pagina-principal',
@@ -7,34 +8,48 @@ import { HorarioService } from 'src/app/services/horario.service';
   styleUrls: ['./pagina-principal.component.scss'],
 })
 export class PaginaPrincipalComponent implements OnInit {
-  // clases: any[] = [
-  //   { nombre: 'Clase 1', horario: 'Lunes 9:00 AM', id: 1 },
-  //   { nombre: 'Clase 2', horario: 'Martes 10:30 AM', id: 2 },
-  //   { nombre: 'Clase 3', horario: 'Miércoles 2:00 PM', id: 3 },
-  // ];
-  clases: any[] = []
+  clases: any[] = [];
 
-  constructor(private _horario: HorarioService) {}
+  constructor(private _horario: HorarioService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    this.getHorario()
+    this.getHorario();
   }
 
-  getHorario(){
-    this._horario.getHorario().subscribe(data => {
+  getHorario() {
+    this._horario.getHorario().subscribe((data) => {
       this.clases = [];
       data.forEach((element: any) => {
+        const fecha = new Date(element.payload.doc.data().date);
+        const options: Intl.DateTimeFormatOptions = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+        };
+        const fechaFormateada = fecha.toLocaleDateString('es-ES', options);
+
         this.clases.push({
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
+          date: fechaFormateada,
         });
       });
-    })
+    });
   }
 
   eliminarClase(id: string) {
-    this._horario.deleteHorario(id).then(() => {
-      console.log('producto elimminado...')
-    })
+    this._horario.obtHorario(id).subscribe((data: any) => {
+      if (data || data.clase) {
+        this._horario.deleteHorario(id).then(() => {
+          console.log('clase eliminada...');
+        });
+      } else {
+        console.log('No se encontró la clase con el ID especificado.');
+      }
+    });
   }
 }

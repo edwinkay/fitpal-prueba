@@ -12,8 +12,8 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let clase of clases">
-      <ion-label>{{ clase.materia }}</ion-label>
-      <ion-label>{{ clase.fecha }}</ion-label>
+      <ion-label>{{ clase.clase }}</ion-label>
+      <ion-label>{{ clase.date }}</ion-label>
       <ion-buttons slot="end">
         <ion-button [routerLink]="['/ajustar-horario', clase.id ] ">Editar</ion-button>
         <ion-button (click)="eliminarClase(clase.id)">Eliminar</ion-button>

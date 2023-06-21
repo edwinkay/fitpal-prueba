@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-principal.component';
 import { FormularioClaseComponent } from './components/formulario-clase/formulario-clase.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 //firebase
 import { AngularFireModule } from '@angular/fire/compat';
@@ -27,7 +28,7 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     IonicModule.forRoot(),
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
