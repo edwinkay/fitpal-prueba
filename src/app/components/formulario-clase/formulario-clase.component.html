@@ -1,41 +1,48 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button [routerLink]="'/pagina-principal'" class="ion-text-start"
-        >Listas de clases</ion-button
-      >
+      <ion-button [routerLink]="'/pagina-principal'" class="ion-text-start">Listas de clases</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list [formGroup]="crearHorario">
-  <ion-item>
-    <ion-label position="floating">Clase</ion-label>
-    <ion-input formControlName="clase" required></ion-input>
-  </ion-item>
+<ion-content style="height: 100%">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-list [formGroup]="crearHorario">
+          <ion-item>
+            <ion-label position="floating">Agregar clase</ion-label>
+            <ion-input placeholder="Escriba la clase" formControlName="clase" required></ion-input>
+          </ion-item>
 
-  <ion-item>
-    <ion-datetime
-      formControlName="date"
-      required
-      class="dt"
-      display-format="YYYY-MM-DD"
-      hourCycle="h12"
-    >
-      <span slot="title">Selecciona un horario</span>
-      <span slot="time-label">Tiempo</span>
-    </ion-datetime>
-  </ion-item>
+          <ion-item>
+            <ion-datetime
+              formControlName="date"
+              required
+              class="dt"
+              display-format="YYYY-MM-DD"
+              hourCycle="h12"
+            >
+              <!-- <ion-label slot="title">Selecciona un horario</ion-label> -->
+              <ion-label slot="time-label">Tiempo</ion-label>
+            </ion-datetime>
+          </ion-item>
 
-  <ion-item expand="full" *ngIf="camposVacios" color="danger">
-    Los campos no pueden estar vacíos.
-  </ion-item>
+          <ion-col color="danger" *ngIf="camposVacios">
+            <div class="ion-text-center">
+              <span style="color: red">Los campos no pueden estar vacíos.</span>
+            </div>
+          </ion-col>
 
-  <ion-button expand="full" (click)="agregarEditar()">{{ titleChange }}</ion-button>
-  <ion-button color="danger" expand="full" [routerLink]="'/pagina-principal'">
-    Volver
-  </ion-button>
-</ion-list>
-
+          <ion-button expand="full" (click)="agregarEditar()">{{ titleChange }}</ion-button>
+          <ion-button color="danger" expand="full" [routerLink]="'/pagina-principal'">
+            Volver
+          </ion-button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+

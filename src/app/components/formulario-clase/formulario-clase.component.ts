@@ -44,15 +44,14 @@ export class FormularioClaseComponent implements OnInit {
       this._horarioService.agregarHorario(horario).then(() => {
         this.router.navigate(['/pagina-principal']);
       });
-    }else{
-      this.camposVacios = true;
-      setTimeout(() => {
-        this.camposVacios = false;
-      }, 2000);
     }
   }
   agregarEditar() {
     if (this.crearHorario.invalid) {
+      this.camposVacios = true;
+      setTimeout(() => {
+        this.camposVacios = false;
+      }, 2000);
       return;
     }
     if (this.id === null) {

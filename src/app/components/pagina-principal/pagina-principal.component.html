@@ -13,11 +13,19 @@
   <ion-list>
     <ion-item *ngFor="let clase of clases">
       <ion-label>{{ clase.clase }}</ion-label>
-      <ion-label>{{ clase.date }}</ion-label>
+      <ion-label text-wrap>{{ clase.date }}</ion-label>
       <ion-buttons slot="end">
-        <ion-button [routerLink]="['/ajustar-horario', clase.id ] ">Editar</ion-button>
-        <ion-button (click)="eliminarClase(clase.id)">Eliminar</ion-button>
+        <ion-button [routerLink]="['/ajustar-horario', clase.id]">
+          <ion-icon name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="eliminarClase(clase.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
 </ion-content>
+
+
+
+
