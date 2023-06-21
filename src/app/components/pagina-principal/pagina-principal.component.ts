@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HorarioService } from 'src/app/services/horario.service';
 import { DatePipe } from '@angular/common';
+import { ModalController } from '@ionic/angular';
+import { ConfirmacionModalComponent } from '../confirmacion-modal/confirmacion-modal.component';
 
 @Component({
   selector: 'app-pagina-principal',
@@ -9,8 +11,13 @@ import { DatePipe } from '@angular/common';
 })
 export class PaginaPrincipalComponent implements OnInit {
   clases: any[] = [];
+  crearHorario: any;
 
-  constructor(private _horario: HorarioService, private datePipe: DatePipe) {}
+  constructor(
+    private _horario: HorarioService,
+    private datePipe: DatePipe,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit(): void {
     this.getHorario();
@@ -51,5 +58,21 @@ export class PaginaPrincipalComponent implements OnInit {
         console.log('No se encontró la clase con el ID especificado.');
       }
     });
+  }
+  async confirmarEliminacion(claseId: string) {
+    const modal = await this.modalController.create({
+      component: ConfirmacionModalComponent,
+      componentProps: {
+        claseId: claseId,
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data && data.eliminar) {
+      // Lógica para eliminar la clase
+      this.eliminarClase(claseId);
+    }
   }
 }

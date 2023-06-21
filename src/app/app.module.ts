@@ -13,12 +13,14 @@ import { DatePipe } from '@angular/common';
 //firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
+import { ConfirmacionModalComponent } from './components/confirmacion-modal/confirmacion-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PaginaPrincipalComponent,
     FormularioClaseComponent,
+    ConfirmacionModalComponent,
   ],
   imports: [
     BrowserModule,
