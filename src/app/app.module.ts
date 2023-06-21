@@ -7,20 +7,27 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { PaginaPrincipalComponent } from './components/pagina-principal/pagina-principal.component';
 import { FormularioClaseComponent } from './components/formulario-clase/formulario-clase.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+//firebase
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     PaginaPrincipalComponent,
-    FormularioClaseComponent
+    FormularioClaseComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    IonicModule.forRoot()
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    IonicModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

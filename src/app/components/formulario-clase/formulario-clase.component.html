@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Nuevo Horario</ion-title>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/pagina-principal'" class="ion-text-start"
+        >Listas de clases</ion-button
+      >
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,19 +18,22 @@
     <ion-item>
       <!-- <ion-label position="floating">Horario</ion-label> -->
       <ion-datetime
-      class="dt"
+        required
+        class="dt"
         display-format="YYYY-MM-DD"
         hourCycle="h12"
         [(ngModel)]="date"
-        >
-        <div class="datetime-header" slot="datetime-header" style="background-color: red;"></div>
+      >
         <span slot="title">Selecciona un horario</span>
         <span slot="time-label">Tiempo</span></ion-datetime
       >
     </ion-item>
 
-    <ion-button expand="full" (click)="agregarProducto()"
+    <ion-button expand="full" (click)="agregarHorario()"
       >Agregar Horario</ion-button
+    >
+    <ion-button color="danger" expand="full" [routerLink]="'/pagina-principal'"
+      >Volver</ion-button
     >
   </ion-list>
 </ion-content>
